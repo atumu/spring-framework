@@ -401,6 +401,15 @@ project("spring-core") {
 	}
 }
 
+project("spring-mytest") {
+    description = "Spring mytest"
+
+    dependencies {
+        compile(project(":spring-core"))
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+    }
+}
+
 project("spring-beans") {
 	description = "Spring Beans"
 
@@ -1251,6 +1260,7 @@ configure(rootProject) {
 		testCompile(project(":spring-jdbc"))
 		testCompile(project(":spring-orm"))
 		testCompile(project(":spring-test"))
+		testCompile(project(":spring-mytest"))
 		testCompile(project(":spring-tx"))
 		testCompile(project(":spring-web"))
 		testCompile("javax.servlet:javax.servlet-api:${servletVersion}")

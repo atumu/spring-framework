@@ -58,6 +58,8 @@ public class NumberUtilsTests {
 		String aFloat = "" + Float.MAX_VALUE;
 		String aDouble = "" + Double.MAX_VALUE;
 
+        System.out.println(NumberUtils.parseNumber(aByte, Byte.class, nf));
+
 		assertEquals("Byte did not parse", new Byte(Byte.MAX_VALUE), NumberUtils.parseNumber(aByte, Byte.class, nf));
 		assertEquals("Short did not parse", new Short(Short.MAX_VALUE), NumberUtils.parseNumber(aShort, Short.class, nf));
 		assertEquals("Integer did not parse", new Integer(Integer.MAX_VALUE), NumberUtils.parseNumber(anInteger, Integer.class, nf));

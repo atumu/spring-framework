@@ -20,7 +20,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Rod Johnson
@@ -29,123 +31,127 @@ import static org.junit.Assert.*;
  */
 public class StopWatchTests {
 
-	private final StopWatch sw = new StopWatch();
+    private final StopWatch sw = new StopWatch();
 
-	@Rule
-	public final ExpectedException exception = ExpectedException.none();
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
 
-	@Test
-	public void validUsage() throws Exception {
-		String id = "myId";
-		StopWatch sw = new StopWatch(id);
-		long int1 = 166L;
-		long int2 = 45L;
-		String name1 = "Task 1";
-		String name2 = "Task 2";
+    @Test
+    public void validUsage() throws Exception {
+        String id = "myId";
+        StopWatch sw = new StopWatch(id);
+        long int1 = 166L;
+        long int2 = 45L;
+        String name1 = "Task 1";
+        String name2 = "Task 2";
 
-		assertFalse(sw.isRunning());
-		sw.start(name1);
-		Thread.sleep(int1);
-		assertTrue(sw.isRunning());
-		assertEquals(name1, sw.currentTaskName());
-		sw.stop();
+        assertFalse(sw.isRunning());
+        sw.start(name1);
+        Thread.sleep(int1);
+        assertTrue(sw.isRunning());
+        assertEquals(name1, sw.currentTaskName());
+        sw.stop();
 
-		// TODO are timings off in JUnit? Why do these assertions sometimes fail
-		// under both Ant and Eclipse?
+        // TODO are timings off in JUnit? Why do these assertions sometimes fail;
+        // under both Ant and Eclipse?
 
-		// long fudgeFactor = 5L;
-		// assertTrue("Unexpected timing " + sw.getTotalTime(), sw.getTotalTime() >=
-		// int1);
-		// assertTrue("Unexpected timing " + sw.getTotalTime(), sw.getTotalTime() <= int1
-		// + fudgeFactor);
-		sw.start(name2);
-		Thread.sleep(int2);
-		sw.stop();
-		// assertTrue("Unexpected timing " + sw.getTotalTime(), sw.getTotalTime() >= int1
-		// + int2);
-		// assertTrue("Unexpected timing " + sw.getTotalTime(), sw.getTotalTime() <= int1
-		// + int2 + fudgeFactor);
+        long fudgeFactor = 5L;
+        long totalTimeMillis1 = sw.getTotalTimeMillis();
+        assertTrue("Unexpected timing " + totalTimeMillis1, totalTimeMillis1 >=
+            int1);
+        assertTrue("Unexpected timing " + totalTimeMillis1, totalTimeMillis1 <= int1
+            + fudgeFactor);
+        sw.start(name2);
+        Thread.sleep(int2);
+        sw.stop();
 
-		assertTrue(sw.getTaskCount() == 2);
-		String pp = sw.prettyPrint();
-		assertTrue(pp.contains(name1));
-		assertTrue(pp.contains(name2));
+        long totalTimeMillis2 = sw.getTotalTimeMillis();
+        assertTrue("Unexpected timing " + totalTimeMillis2, totalTimeMillis2 >= int1
+            + int2);
+        assertTrue("Unexpected timing " + totalTimeMillis2, totalTimeMillis2 <= int1
+            + int2 + fudgeFactor);
 
-		StopWatch.TaskInfo[] tasks = sw.getTaskInfo();
-		assertTrue(tasks.length == 2);
-		assertTrue(tasks[0].getTaskName().equals(name1));
-		assertTrue(tasks[1].getTaskName().equals(name2));
+        assertTrue(sw.getTaskCount() == 2);
+        String pp = sw.prettyPrint();
+        System.out.println(pp);
+        assertTrue(pp.contains(name1));
+        assertTrue(pp.contains(name2));
 
-		String toString = sw.toString();
-		assertTrue(toString.contains(id));
-		assertTrue(toString.contains(name1));
-		assertTrue(toString.contains(name2));
+        StopWatch.TaskInfo[] tasks = sw.getTaskInfo();
+        assertTrue(tasks.length == 2);
+        assertTrue(tasks[0].getTaskName().equals(name1));
+        assertTrue(tasks[1].getTaskName().equals(name2));
 
-		assertEquals(id, sw.getId());
-	}
+        String toString = sw.toString();
+        assertTrue(toString.contains(id));
+        assertTrue(toString.contains(name1));
+        assertTrue(toString.contains(name2));
 
-	@Test
-	public void validUsageNotKeepingTaskList() throws Exception {
-		sw.setKeepTaskList(false);
-		long int1 = 166L;
-		long int2 = 45L;
-		String name1 = "Task 1";
-		String name2 = "Task 2";
+        assertEquals(id, sw.getId());
+    }
 
-		assertFalse(sw.isRunning());
-		sw.start(name1);
-		Thread.sleep(int1);
-		assertTrue(sw.isRunning());
-		sw.stop();
+    @Test
+    public void validUsageNotKeepingTaskList() throws Exception {
+        sw.setKeepTaskList(false);
+        long int1 = 166L;
+        long int2 = 45L;
+        String name1 = "Task 1";
+        String name2 = "Task 2";
 
-		// TODO are timings off in JUnit? Why do these assertions sometimes fail
-		// under both Ant and Eclipse?
+        assertFalse(sw.isRunning());
+        sw.start(name1);
+        Thread.sleep(int1);
+        assertTrue(sw.isRunning());
+        sw.stop();
 
-		// long fudgeFactor = 5L;
-		// assertTrue("Unexpected timing " + sw.getTotalTime(), sw.getTotalTime() >=
-		// int1);
-		// assertTrue("Unexpected timing " + sw.getTotalTime(), sw.getTotalTime() <= int1
-		// + fudgeFactor);
-		sw.start(name2);
-		Thread.sleep(int2);
-		sw.stop();
-		// assertTrue("Unexpected timing " + sw.getTotalTime(), sw.getTotalTime() >= int1
-		// + int2);
-		// assertTrue("Unexpected timing " + sw.getTotalTime(), sw.getTotalTime() <= int1
-		// + int2 + fudgeFactor);
+        // TODO are timings off in JUnit? Why do these assertions sometimes fail
+        // under both Ant and Eclipse?
 
-		assertTrue(sw.getTaskCount() == 2);
-		String pp = sw.prettyPrint();
-		assertTrue(pp.contains("kept"));
+        // long fudgeFactor = 5L;
+        // assertTrue("Unexpected timing " + sw.getTotalTime(), sw.getTotalTime() >=
+        // int1);
+        // assertTrue("Unexpected timing " + sw.getTotalTime(), sw.getTotalTime() <= int1
+        // + fudgeFactor);
+        sw.start(name2);
+        Thread.sleep(int2);
+        sw.stop();
+        // assertTrue("Unexpected timing " + sw.getTotalTime(), sw.getTotalTime() >= int1
+        // + int2);
+        // assertTrue("Unexpected timing " + sw.getTotalTime(), sw.getTotalTime() <= int1
+        // + int2 + fudgeFactor);
 
-		String toString = sw.toString();
-		assertFalse(toString.contains(name1));
-		assertFalse(toString.contains(name2));
+        assertTrue(sw.getTaskCount() == 2);
+        String pp = sw.prettyPrint();
+        assertTrue(pp.contains("kept"));
 
-		exception.expect(UnsupportedOperationException.class);
-		sw.getTaskInfo();
-	}
+        String toString = sw.toString();
+        assertFalse(toString.contains(name1));
+        assertFalse(toString.contains(name2));
 
-	@Test
-	public void failureToStartBeforeGettingTimings() {
-		exception.expect(IllegalStateException.class);
-		sw.getLastTaskTimeMillis();
-	}
+        exception.expect(UnsupportedOperationException.class);
+        sw.getTaskInfo();
+    }
 
-	@Test
-	public void failureToStartBeforeStop() {
-		exception.expect(IllegalStateException.class);
-		sw.stop();
-	}
+    @Test
+    public void failureToStartBeforeGettingTimings() {
+        exception.expect(IllegalStateException.class);
+        sw.getLastTaskTimeMillis();
+    }
 
-	@Test
-	public void rejectsStartTwice() {
-		sw.start("");
-		sw.stop();
-		sw.start("");
-		assertTrue(sw.isRunning());
-		exception.expect(IllegalStateException.class);
-		sw.start("");
-	}
+    @Test
+    public void failureToStartBeforeStop() {
+        exception.expect(IllegalStateException.class);
+        sw.stop();
+    }
+
+    @Test
+    public void rejectsStartTwice() {
+        sw.start("");
+        sw.stop();
+        sw.start("");
+        assertTrue(sw.isRunning());
+        exception.expect(IllegalStateException.class);
+        sw.start("");
+    }
 
 }

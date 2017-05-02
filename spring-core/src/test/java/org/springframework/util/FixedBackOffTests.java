@@ -59,8 +59,8 @@ public class FixedBackOffTests {
 		BackOffExecution execution = backOff.start();
 		BackOffExecution execution2 = backOff.start();
 
-		assertEquals(100l, execution.nextBackOff());
-		assertEquals(100l, execution2.nextBackOff());
+		assertEquals(100L, execution.nextBackOff());
+		assertEquals(100L, execution2.nextBackOff());
 		assertEquals(BackOffExecution.STOP, execution.nextBackOff());
 		assertEquals(BackOffExecution.STOP, execution2.nextBackOff());
 	}

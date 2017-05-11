@@ -54,7 +54,8 @@ public class ByteArrayDecoderTests extends AbstractDataBufferAllocatingTestCase 
 		DataBuffer fooBuffer = stringBuffer("foo");
 		DataBuffer barBuffer = stringBuffer("bar");
 		Flux<DataBuffer> source = Flux.just(fooBuffer, barBuffer);
-		Flux<byte[]> output = this.decoder.decode(source,
+        System.out.println(source.toString());
+        Flux<byte[]> output = this.decoder.decode(source,
 				ResolvableType.forClassWithGenerics(Publisher.class, byte[].class),
 				null, Collections.emptyMap());
 

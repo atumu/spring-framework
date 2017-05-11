@@ -84,6 +84,7 @@ public class BeanWrapperTests extends AbstractPropertyAccessorTests {
 			fail("Should throw exception when everything is valid");
 		}
 		catch (PropertyBatchUpdateException ex) {
+            ex.printStackTrace();
 			assertTrue("Must contain 2 exceptions", ex.getExceptionCount() == 2);
 			// Test validly set property matches
 			assertTrue("Vaid set property must stick", target.getName().equals(newName));
@@ -286,7 +287,8 @@ public class BeanWrapperTests extends AbstractPropertyAccessorTests {
 	public static class TypedReadOnlyMapClient {
 
 		public void setMap(TypedReadOnlyMap map) {
-		}
+            System.out.println(map.toString());
+        }
 	}
 
 

@@ -93,6 +93,7 @@ public abstract class AbstractPropertyAccessorTests {
 		}
 		catch (IllegalArgumentException ex) {
 			// expected
+            ex.printStackTrace();
 		}
 	}
 

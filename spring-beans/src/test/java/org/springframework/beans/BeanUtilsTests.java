@@ -141,6 +141,8 @@ public class BeanUtilsTests {
 	}
 
 	@Test
+    // BOOKMARK testCopyPropertiesWithEditable(2017/5/9 15:46) BeanUtils.copyProperties()
+    // BeanUtils.copyProperties(tb, tb2, ITestBean.class); 只更新ITestBean内的属性
 	public void testCopyPropertiesWithEditable() throws Exception {
 		TestBean tb = new TestBean();
 		assertTrue("Name empty", tb.getName() == null);
@@ -207,6 +209,15 @@ public class BeanUtilsTests {
 
 	@Test
 	public void testResolveInvalidSignature() throws Exception {
+        try {
+            BeanUtils.resolveSignature("doSomething()", MethodSignatureBean.class);
+            //fail("Should not be able to parse with opening but no closing paren.");
+            System.out.println("成功获取签名");
+        }
+        catch (IllegalArgumentException ex) {
+            // success
+            ex.printStackTrace();
+        }
 		try {
 			BeanUtils.resolveSignature("doSomething(", MethodSignatureBean.class);
 			fail("Should not be able to parse with opening but no closing paren.");

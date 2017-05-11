@@ -66,7 +66,7 @@ import org.springframework.core.Ordered;
  * value of the {@link #proxyTargetClass} attribute will be ignored. Note also that in
  * this case the {@code spring-aspects} module JAR must be present on the classpath.
  *
- * <p>By default, Spring will be searching for an associated thread pool definition:
+ * <p>By default, Spring will be searching for an associated(相关的) thread pool definition:
  * either a unique {@link org.springframework.core.task.TaskExecutor} bean in the context,
  * or an {@link java.util.concurrent.Executor} bean named "taskExecutor" otherwise. If
  * neither of the two is resolvable, a {@link org.springframework.core.task.SimpleAsyncTaskExecutor}

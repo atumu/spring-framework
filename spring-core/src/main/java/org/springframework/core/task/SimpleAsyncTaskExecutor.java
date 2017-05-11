@@ -55,7 +55,7 @@ public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator implement
 	public static final int UNBOUNDED_CONCURRENCY = ConcurrencyThrottleSupport.UNBOUNDED_CONCURRENCY;
 
 	/**
-	 * Switch concurrency 'off': that is, don't allow any concurrent invocations.
+	 * Switch concurrency 'off': that is, don't allow any concurrent invocations(调用).
 	 */
 	public static final int NO_CONCURRENCY = ConcurrencyThrottleSupport.NO_CONCURRENCY;
 
